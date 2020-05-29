@@ -13,7 +13,7 @@ pipeline {
         DOCKER_CREDENTIAL_ID = 'azure-images'
         GITHUB_CREDENTIAL_ID = 'gitlab-zhangshihu'
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig-zhangshihu'
-        REGISTRY = 'gangtiseacr.azurecr.cn'
+        REGISTRY = 'gangtiseacr.azurecr.io'
         GITHUB_ACCOUNT = 'gangtise'
         APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID = 'sonar-token'
