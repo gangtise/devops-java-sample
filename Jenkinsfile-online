@@ -14,7 +14,6 @@ pipeline {
         GITHUB_CREDENTIAL_ID = 'gitlab-zhangshihu'
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig-zhangshihu'
         REGISTRY = 'https://gangtiseacr.azurecr.cn'
-        DOCKERHUB_NAMESPACE = ''
         GITHUB_ACCOUNT = 'gangtise'
         APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID = 'sonar-token'
@@ -54,10 +53,10 @@ pipeline {
             steps {
                 container ('maven') {
                     sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
-                    sh 'docker build -f Dockerfile-online -t $REGISTRY/$APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER .'
+                    sh 'docker build -f Dockerfile-online -t $APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker push  $REGISTRY/$APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER'
+                        sh 'docker push  /$APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER'
                     }
                 }
             }
@@ -69,8 +68,8 @@ pipeline {
            }
            steps{
                 container ('maven') {
-                  sh 'docker tag  $REGISTRY/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$APP_NAME:latest '
-                  sh 'docker push  $REGISTRY/$APP_NAME:latest '
+                  sh 'docker tag  $APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $APP_NAME:latest '
+                  sh 'docker push  $APP_NAME:latest '
                 }
            }
         }
@@ -99,8 +98,8 @@ pipeline {
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
                     sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/devops-java-sample.git --tags --ipv4'
                   }
-                sh 'docker tag  $REGISTRY/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$APP_NAME:$TAG_NAME '
-                sh 'docker push  $REGISTRY/$APP_NAME:$TAG_NAME '
+                sh 'docker tag  $APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $APP_NAME:$TAG_NAME '
+                sh 'docker push  $APP_NAME:$TAG_NAME '
           }
           }
         }
