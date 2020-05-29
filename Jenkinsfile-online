@@ -13,7 +13,7 @@ pipeline {
         DOCKER_CREDENTIAL_ID = 'azure-images'
         GITHUB_CREDENTIAL_ID = 'gitlab-zhangshihu'
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig-zhangshihu'
-        REGISTRY = 'gangtiseacr.azurecr.io'
+        REGISTRY = 'gangtiseacr.azurecr.cn'
         GITHUB_ACCOUNT = 'gangtise'
         APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID = 'sonar-token'
@@ -55,7 +55,7 @@ pipeline {
                     sh 'mvn -o -Dmaven.test.skip=true -gs `pwd`/configuration/settings.xml clean package'
                     sh 'docker build -f Dockerfile-online -t $APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
-                        sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
+                        sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" -p R85z8FxT0u4ty4wnI93T1ugM/xD9fSMK'
                         sh 'docker push $APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER'
                     }
                 }
