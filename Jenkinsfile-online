@@ -14,8 +14,8 @@ pipeline {
         GITHUB_CREDENTIAL_ID = 'gitlab-zhangshihu'
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig-zhangshihu'
         REGISTRY = 'https://gangtiseacr.azurecr.cn'
-        DOCKERHUB_NAMESPACE = 'gangtiseACR'
-        GITHUB_ACCOUNT = 'gangtiseACR'
+        DOCKERHUB_NAMESPACE = 'gangtiseacr'
+        GITHUB_ACCOUNT = 'gangtise'
         APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID = 'sonar-token'
     }
