@@ -56,7 +56,7 @@ pipeline {
                     sh 'docker build -f Dockerfile-online -t $APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
-                        sh 'docker push  /$APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER'
+                        sh 'docker push $APP_NAME:snapshot-$BRANCH_NAME-$BUILD_NUMBER'
                     }
                 }
             }
